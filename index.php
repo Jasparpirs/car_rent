@@ -49,7 +49,7 @@
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search"/>
         <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
       </form>
     </div>
@@ -67,7 +67,7 @@
             <button class="btn btn-dark"> Vaata autosid</button>
           </div>
           <div class="col-sm-6">
-        <img class="image-fluid h-100" src="https://picsum.photos/600/250" alt="autopilt">
+        <img class="image-fluid h-100" src="https://loremflickr.com/600/250/car" alt="autopilt">
           </div>
         </div>
         </div>
@@ -76,12 +76,16 @@
 <!-- heroblock -->
 
 <?php
-$paring = 'SELECT * FROM cars LIMIT 8'; 
+$paring = 'SELECT * FROM cars'; 
+if (isset ($_GET["search"])){
+  $otsi = $_GET["search"];
+  $paring .= ' WHERE mark LIKE "%'.$otsi.'%"';
+}
+
+$paring .= ' LIMIT 8';
 $valjund = mysqli_query($yhendus, $paring);
 
-
-
-
+// var_dump($valjund);
 
 ?>
 
@@ -89,6 +93,22 @@ $valjund = mysqli_query($yhendus, $paring);
 
 <!-- autode kaardid -->
 <div class="container">
+   <?php
+  // Alert kast, kui autot ei leitud
+    if ($result=mysqli_query($yhendus,$paring)){
+      $rowcount=mysqli_num_rows($result);
+      if ($rowcount == 0) {
+       echo '
+       <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Otsitud autot ei leitud
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+       ';
+      }
+    }
+  ?>
+
+
 <div class="row">
     <?php
 while($rida = mysqli_fetch_row($valjund)){ 
@@ -96,7 +116,7 @@ while($rida = mysqli_fetch_row($valjund)){
 
     <div class="col-sm-3">
 <div class="card my-4" style="width: 18rem;">
-  <img src="https://picsum.photos/600/250" class="card-img-top" alt="...">
+  <img src="https://loremflickr.com/600/350/<?php  echo $rida[1] ?>" class="card-img-top" alt="auto">
   <div class="card-body">
     <div class="row">
         <h5>   
