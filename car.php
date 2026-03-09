@@ -55,24 +55,44 @@
     </div>
   </div>
 </nav>
+
 <!-- menu -->
-
-  
-
-<?php  $pairing = 'SELECT * FROM cars WHERE id=10'; 
+<?php 
+$id = $_GET["id"];
+ $pairing = 'SELECT * FROM cars WHERE id='.$id.''; 
  $valjund = mysqli_query($yhendus, $pairing);  
- $rida = mysqli_fetch_row($valjund);  var_dump($rida); ?>
+ $rida = mysqli_fetch_row($valjund);  
+//  var_dump($rida); ?>
 
 
 
 <!-- autode kaardid -->
-<div class="container">
-<div class="row">
+<div class="container my-5">
+<div class=" row">
   <div class="col-sm-6">
-<h1>Auto Info</h1>
+         <h5>   
+  <?php  echo($rida[1]. "<br>");  ?>  
+        </h5>
+ <p class="card-text text-secondary "><?php  echo($rida[2]. "<br>");  ?>  </p>
+    <p class="card-text ">
+          
+            <ul class=" list-unstyled mb-4">
+        <li><strong>Mootor:</strong> <?php echo $rida[3]; ?></li>
+        <li><strong>Kütus:</strong> <?php echo $rida[4]; ?></li>  
+        <li><strong>Käigukast:</strong> <?php echo $rida[5]; ?></li>
+        <li><strong>Aasta:</strong> <?php echo $rida[7]; ?></li>
+       <li><strong>Käigukast:</strong> <?php echo $rida[8]; ?></li>
+       <li><strong>Istmekohad:</strong> <?php echo $rida[9]; ?></li>
+       <li><strong>Selgitus:</strong> <?php echo $rida[10]; ?></li>
+        <li><strong>Staatus:</strong> <?php echo $rida[11]; ?></li>
+            </ul>
+            <button class="btn btn-dark w-100">Rendi</button>
+
+
+
   </div>
   <div class="col-sm-6">
-    <img src="https://loremflickr.com/600/350/"
+    <img src="https://loremflickr.com/600/350/<?php  echo $rida[1] ?>" class="card-img-top" alt="auto">
   </div>
 </div>
 

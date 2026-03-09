@@ -109,6 +109,8 @@ $valjund = mysqli_query($yhendus, $paring);
   ?>
 
 
+
+
 <div class="row">
     <?php
 while($rida = mysqli_fetch_row($valjund)){ 
@@ -131,7 +133,8 @@ while($rida = mysqli_fetch_row($valjund)){
         Mootor:  <?php  echo($rida[3]. "<br>");  ?>   <br>
         Kütus:  <?php  echo($rida[4]. "<br>");  ?>  
         Hind:  <?php  echo($rida[5]. "<br>");  ?>  
-    <a href="#" class="btn btn-primary">Rendi</a>
+        Istekohad:
+    <a href="car.php?id=<?php  echo$rida[0]; ?>" class="btn btn-dark w-100">Rendi</a>
   </div>
 </div>
     </div>
