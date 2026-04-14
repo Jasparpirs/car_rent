@@ -37,6 +37,9 @@
          <li class="nav-item">
           <a class="nav-link active" aria-disabled="true">Hinnad</a>
         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="adminlogin.php">login</a>
+        </li>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -52,6 +55,10 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search"/>
         <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
       </form>
+      <form action="adminlogout.php">
+<div class="d-grid gap-2  d-md-flex justify-content-md-end">
+  <button class="btn btn-outline-secondary me-md-2" type="submit"></a>Logout</button>
+</div>
     </div>
   </div>
 </nav>

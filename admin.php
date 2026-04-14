@@ -1,5 +1,15 @@
 <?php include("config.php"); ?>
 
+<?php
+	session_start();
+  
+	if ($_SESSION['tuvastamine'] !== 'Admin') {
+	  header('Location: adminlogin.php');
+	  exit();
+	  }
+    ?> 
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -44,9 +54,13 @@
           <a class="nav-link active" aria-disabled="true">Kasutajad</a>
         </li>
       </ul>
-     <div class="d-grid gap-2 d-md-block">
-  <button class="btn btn-primary" type="button">Logout</button>
+           
+<form action="adminlogout.php">
+<form action="adminlogout.php">
+<div class="d-grid gap-2  d-md-flex justify-content-md-end">
+  <button class="btn btn-outline-secondary me-md-2" type="submit"></a>Logout</button>
 </div>
+</form>
     </div>
   </div>
 </nav>
@@ -101,7 +115,7 @@ while($rida = mysqli_fetch_row($valjund)){
       <td style="max-width:150px;"> <?php  echo $rida[10] ?></td>
 <!-- button delete ja muuda -->
       <td><div class=" d-md-flex btn-group justify-content-md-end" role="group" aria-label="Basic outlined example">
-<a class="btn btn-outline-primary" href="admin_modifyauto.php?id=<?php echo $rida[0]; ?>">Muuda</a>
+ <a href="admin_modifyauto.php?id=<?php echo $rida[0]; ?>" class="btn btn-outline-primary btn-sm">Muuda</a>
 
 
  <a class="btn btn-outline-danger" href="kustuta_auto.php?del_id=<?php  echo$rida[0]; ?>" onclick="return confirm('Are you sure you want to Remove?');">Remove</a>

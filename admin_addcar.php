@@ -1,5 +1,15 @@
 <?php include("config.php"); ?>
 
+
+<!-- <?php
+	session_start();
+	if ($_SESSION['tuvastamine'] !== 'Admin') {
+	  header('Location: adminlogin.php');
+	  exit();
+	  }
+    ?> -->
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,7 +25,7 @@
     </style>
   </head>
   <body class="bg-body-tertiary">
-    
+   
   
 <!-- menuu -->
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom">

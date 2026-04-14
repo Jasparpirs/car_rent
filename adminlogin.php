@@ -15,39 +15,41 @@ echo password_hash("admin1", PASSWORD_DEFAULT);
 
 <?php include('config.php'); ?>
 <?php
-	// session_start();
-	// if (isset($_SESSION['tuvastamine'])) {
-	//   header('Location: admin.php');
-	//   exit();
-	//   }
+	session_start();
+    
 	  //kontrollime kas väljad on täidetud
 	if (!empty($_POST['login']) && !empty($_POST['pass'])) {
 		//eemaldame kasutaja sisestusest kahtlase pahna
 		$login = htmlspecialchars(trim($_POST['login']));
 		$pass = htmlspecialchars(trim($_POST['pass']));
-	
+
+        $paring = "SELECT * FROM users WHERE email='$login'";
+		$valjund = mysqli_query($yhendus, $paring);
+        $rida = mysqli_fetch_row($valjund);
+        $pass2=$rida[6];
+    
 		
-		$hashed_password = password_verify($pass, );
-        var_dump($hashed_password);
+		$hashed_password = password_verify($pass, $pass2);
+       
         if ($hashed_password == true ){
-            echo "töötab";
-        }
-        else {
-            echo "ei tööta";
+    $_SESSION['staatus'] = $rida[1];
+    $_SESSION['tuvastamine'] = $rida[1];
+
+    if ($rida[1] == "Admin") {
+        header('Location: admin.php');
+    } else {
+        header('Location: index.php');
+    }
+    exit();
+}
+else {
+    echo '<div class="alert alert-danger" role="alert">
+    Vale kasutajanimi või parool!
+    </div>';
+}
         }
        
-		//kontrollime kas andmebaasis on selline kasutaja ja parool
-		$paring = "SELECT * FROM users WHERE email='$login'";
-		$valjund = mysqli_query($yhendus, $paring);
-		//kui on, siis loome sessiooni ja suuname
-
-		if (mysqli_num_rows($valjund)==1) {
-			$_SESSION['tuvastamine'] = 'misiganes';
-			header('Location: admin.php');
-		} else {
-			echo "kasutaja või parool on vale";
-		}
-	}
+    
 ?>
 
 <main>
@@ -55,7 +57,7 @@ echo password_hash("admin1", PASSWORD_DEFAULT);
     <form action="" method="post">
         <div>
             <label for="login">Login:</label>
-            <input type="text" name="login" id="login">
+            <input value="juri.juurikas@gmail.com" type="text" name="login" id="login">
         </div>
         <div>
             <label for="pass">Password:</label>
@@ -65,7 +67,7 @@ echo password_hash("admin1", PASSWORD_DEFAULT);
             <input type="submit" value="Logi sisse">
         </div>
         <div>
-            <a href="register.php">Register</a>
+            <a href="adduser.php">Register</a>
         </div>
     </form>
 </main>

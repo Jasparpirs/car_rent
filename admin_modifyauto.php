@@ -14,6 +14,14 @@
   </head>
   <body class="bg-body-tertiary">
 
+<!-- <?php
+	session_start();
+	if ($_SESSION['tuvastamine'] !== 'Admin') {
+	  header('Location: adminlogin.php');
+	  exit();
+	  }
+    ?> -->
+
 
 <!-- menuu -->
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom">
