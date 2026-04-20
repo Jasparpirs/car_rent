@@ -101,8 +101,8 @@ $id = $_GET["id"];
         if (!empty($_GET["algus"]) && !empty($_GET["lopp"])) {
         $kp1=date_create( $_GET["algus"]);
         $kp2=date_create( $_GET["lopp"]);
-$diff=date_diff($kp1,$kp2);
-echo $diff->format("%a") * $rida[5] ;
+        $diff=date_diff($kp1,$kp2);
+        echo $diff->format("%a") * $rida[5] ;
 }
 ?>
 
@@ -140,14 +140,28 @@ if (!empty($_GET["rendi"]) && !empty($_GET["id"]) && !empty($_GET["algus"]) && !
     $total_price = $days * $rida[5];
     $status = "confirmed";
 
-    $sql = "INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status, created_at) 
+
+$check_sql = "SELECT * FROM reservations
+              WHERE car_id = '$car_id'
+              AND '$start_date' <= end_date
+              AND '$end_date' >= start_date";
+
+$check_result = mysqli_query($yhendus, $check_sql);
+
+if (mysqli_num_rows($check_result) > 0) {
+    echo "Kuupäevadel on bron olemas. Vali uued päevad";
+} else {
+    $sql = "INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status, created_at)
             VALUES ('$user_id', '$car_id', '$start_date', '$end_date', '$total_price', '$status', current_timestamp())";
 
     if (mysqli_query($yhendus, $sql)) {
-        echo "Bron tehtud";
-    } 
+        echo "Bron tehtud!";
+    }
+}
 }
 ?>
+
+
 </div>
 
 
