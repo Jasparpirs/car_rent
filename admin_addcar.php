@@ -75,7 +75,7 @@
 <div class="card shadow p-4">
 <form action="admin_addcar.php" method="GET" enctype="multipart/form-data">
 
-    <?php
+<?php
     if(!empty($_GET["mark"]) && !empty($_GET["mudel"])  && !empty($_GET["hind"]) && !empty($_GET["kütus"]) && !empty($_GET["aasta"]) && !empty($_GET["transmission"]) && !empty($_GET["seats"]) && !empty($_GET["description"]) && !empty($_GET["mootor"]) && !empty($_GET["pilt"])){
         $mark= $_GET["mark"];
         $mudel= $_GET["mudel"];
@@ -89,7 +89,7 @@
         $pilt= $_GET["pilt"];
         
   $paring = "INSERT INTO cars (mark, model, engine, fuel, price, image, year, transmission, seats, description, status) 
-  VALUES ('".$mark."', '".$mudel."', '".$hind."', '".$kütus."', '".$aasta."', '".$transmission."', '".$seats."', '".$description."', '".$mootor."', '".$pilt."', '')";
+  VALUES ('".$mark."', '".$mudel."', '".$mootor."', '".$kütus."', '".$hind."', '".$pilt."', '".$aasta."', '".$transmission."', '".$seats."', '".$description."', '')";
   
 if($result= mysqli_query($yhendus, $paring)) {
 	$result = 'Data saved';
@@ -105,7 +105,6 @@ $affected = mysqli_affected_rows($yhendus);
 
     }
 ?>
-    
     <div class="row">
         
         <!-- vasak pool -->

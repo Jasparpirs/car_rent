@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +19,6 @@ echo password_hash("admin1", PASSWORD_DEFAULT);
 
 <?php include('config.php'); ?>
 <?php
-	session_start();
     
 	  //kontrollime kas väljad on täidetud
 	if (!empty($_POST['login']) && !empty($_POST['pass'])) {
@@ -32,6 +35,7 @@ echo password_hash("admin1", PASSWORD_DEFAULT);
 		$hashed_password = password_verify($pass, $pass2);
        
         if ($hashed_password == true ){
+    $_SESSION['user_id'] = $rida[0];
     $_SESSION['staatus'] = $rida[1];
     $_SESSION['tuvastamine'] = $rida[1];
 

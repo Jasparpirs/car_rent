@@ -1,4 +1,7 @@
-<?php include("config.php"); ?>
+<?php
+session_start();
+include("config.php");
+?>
 
 <!doctype html>
 <html lang="en">
@@ -94,13 +97,10 @@ $id = $_GET["id"];
     <h6 class="mb-0">Vali rendi aeg</h6>
 </div>
         <?php
-        // https://www.php.net/manual/en/datetime.diff.php?utm_source=chatgpt.com
+        // https://www.php.net/manual/en/datetime.diff.php
         if (!empty($_GET["algus"]) && !empty($_GET["lopp"])) {
         $kp1=date_create( $_GET["algus"]);
         $kp2=date_create( $_GET["lopp"]);
-        
-        
-
 $diff=date_diff($kp1,$kp2);
 echo $diff->format("%a") * $rida[5] ;
 }
@@ -117,29 +117,45 @@ echo $diff->format("%a") * $rida[5] ;
         <form action="car.php">
           <input type="hidden" name="id" value="<?php  echo($rida[0]);  ?>">
             </ul>
-            <input class="btn btn-dark w-100" type="submit" value="Rendi">
-            </form>
+            <form action="car.php" method="GET">
+    <input type="hidden" name="id" value="<?php echo $rida[0]; ?>">
+    <input type="date" name="algus" required>
+    <input type="date" name="lopp" required>
+    <input class="btn btn-dark w-100" type="submit" name="rendi" value="Rendi">
+</form>
 
-            <?php 
-$id = $_GET["id"];
- $pairing = 'SELECT * FROM reservations'; 
- $valjund = mysqli_query($yhendus, $pairing);  
- $rida = mysqli_fetch_row($valjund); 
- echo($rida[1]);
- echo($rida[2]);
- echo($rida[3]);
- echo($rida[4]);
- echo($rida[5]);
- echo($rida[6]);
- echo($rida[7]);
- 
-  ?>
+<?php
+if (!empty($_GET["rendi"]) && !empty($_GET["id"]) && !empty($_GET["algus"]) && !empty($_GET["lopp"])) {
+
+    $user_id = $_SESSION["user_id"];
+    $car_id = $_GET["id"];
+    $start_date = $_GET["algus"];
+    $end_date = $_GET["lopp"];
+
+    $kp1 = date_create($start_date);
+    $kp2 = date_create($end_date);
+    $diff = date_diff($kp1, $kp2);
+    $days = $diff->format("%a");
+
+    $total_price = $days * $rida[5];
+    $status = "confirmed";
+
+    $sql = "INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status, created_at) 
+            VALUES ('$user_id', '$car_id', '$start_date', '$end_date', '$total_price', '$status', current_timestamp())";
+
+    if (mysqli_query($yhendus, $sql)) {
+        echo "Bron tehtud";
+    } 
+}
+?>
 </div>
 
 
   </div>
+  <div class="container">
   <div class="col-sm-6">
     <img src="https://loremflickr.com/600/350/<?php  echo $rida[1] ?>" class="card-img-top" alt="auto">
+    </div>
   </div>
 </div>
 
